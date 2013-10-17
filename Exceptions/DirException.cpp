@@ -50,6 +50,9 @@ void DirException::setErrorCode(const error_code aCode,const string aPath){
 	case PATH_ERROR:
 		message = aPath + "は使用できない文字を含んでいます。";
 		break;
+	case NOT_DIRECTORY:
+		message = aPath + "はディレクトリではありません。";
+		break;
 	default:
 		message = "予期せぬエラー";
 		break;

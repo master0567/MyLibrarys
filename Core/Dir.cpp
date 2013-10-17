@@ -227,6 +227,10 @@ void Dir::cd(const fs::path& path){
 	fs::path pth(path.string());
 	if(!isPath(path))
 		throw DirException(DirException::PATH_ERROR,path.string(),"Dir.cpp","Dir::cd(string)",__LINE__);
+	if(!isExist(path.string()))
+		throw DirException(DirException::NOT_EXIST,path.string(),"Dir.cpp","Dir::cd(string)",__LINE__);
+	if(!isDirectory(path.string()))
+		throw DirException(DirException::NOT_DIRECTORY,path.string(),"Dir.cpp","Dir::cd(string)",__LINE__);
 	if(pth.is_absolute()){
 		this->path = fs::system_complete(pth);
 	}else if(pth.is_relative()){
@@ -239,6 +243,10 @@ void Dir::cd(const fs::path& path,const DirException& e){
 	try{
 		if(!isPath(path))
 			throw DirException(DirException::PATH_ERROR,path.string(),"Dir.cpp","Dir::cd(string,DirException)",__LINE__);
+		if(!isExist(path.string()))
+			throw DirException(DirException::NOT_EXIST,path.string(),"Dir.cpp","Dir::cd(string)",__LINE__);
+		if(!isDirectory(path.string()))
+			throw DirException(DirException::NOT_DIRECTORY,path.string(),"Dir.cpp","Dir::cd(string)",__LINE__);
 	}catch(const DirException& ex){
 		if(ErrorShow) ex.showError();
 		throw e;

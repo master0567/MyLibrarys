@@ -13,6 +13,7 @@ public:
 		,NOT_EXIST		// 存在していない
 		,NOT_EMPTY		// 空でない
 		,PATH_ERROR		// パスが間違っている
+		,NOT_DIRECTORY	// ディレクトリではない
 		//,NOT_PATH		// 
 	}error_code;
 

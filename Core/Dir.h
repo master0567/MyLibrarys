@@ -74,6 +74,14 @@ public:
 	void cd(const boost::filesystem::path& path);
 	void cd(const boost::filesystem::path& path,const DirException& e);
 
+	/**
+	void move();	// ファイル移動
+	void copy();	// ファイルコピー
+	void getSize(); // ファイルサイズ取得
+	void getLastWriteTime();	// 最終更新取得
+	const vector<string> getIntoDirInPaths() const; // 再起的にディレクトリ取得
+	**/
+
 	bool create(int flag = NONE);
 	bool create(const boost::filesystem::path& path,int flag = NONE);
 	bool remove() const;
