@@ -16,8 +16,8 @@ public:
 	 *  座標計算用関数群
 	 */
 	// 点の回転行列式
-	static cv::Point PointRotate(cv::Point pt,int angle);
-	static cv::Point PointRotate(double dx,double dy,int angle);
+	static cv::Point2f PointRotate(cv::Point2f pt,int angle);
+	static cv::Point2f PointRotate(double dx,double dy,int angle);
 	// 2点から求める単位ベクトル
 	static cv::Point2f UnitVec(cv::Point2f pt1,cv::Point2f pt2);
 	// 2次元ベクトルの大きさを返す

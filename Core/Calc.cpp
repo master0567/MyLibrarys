@@ -15,31 +15,31 @@ Calc::~Calc(void)
  *  ç¿ïWåvéZópä÷êîåQ
  */
 
-cv::Point Calc::PointRotate(cv::Point pt,int angle){
+cv::Point2f Calc::PointRotate(cv::Point2f pt,int angle){
 	double s = sin((double)angle*CV_PI/180.),c = cos((double)angle*CV_PI/180.);
-	cv::Point point;
+	cv::Point2f point;
 	if(abs(s)<0.000001) s=0;
 	if(abs(c)<0.000001) c=0;
-	point.x = pt.x * c + pt.y * s;
-	point.y = -pt.x * s + pt.y * c;
+	point.x = (float)(pt.x * c + pt.y * s);
+	point.y = (float)(-pt.x * s + pt.y * c);
 	return point;
 }
-cv::Point Calc::PointRotate(double dx,double dy,int angle){
+cv::Point2f Calc::PointRotate(double dx,double dy,int angle){
 	double s = sin((double)angle*CV_PI/180.);
 	double c = cos((double)angle*CV_PI/180.);
-	cv::Point point;
+	cv::Point2f point;
 	if(abs(s)<0.000001) s=0;
 	if(abs(c)<0.000001) c=0;
 	//std::cout << "s=" << s << std::endl;
 	//std::cout << "c=" << c << std::endl;
-	point.x = dx * c + dy * s;
-	point.y = -dx * s + dy * c;
+	point.x = (float)( dx * c + dy * s);
+	point.y = (float)(-dx * s + dy * c);
 	return point;
 }
 
 cv::Point2f Calc::UnitVec(cv::Point2f pt1,cv::Point2f pt2){
 	cv::Vec2f unitvec(pt2-pt1);
-	double distance = getDistance(pt1,pt2);
+	float distance = (float)getDistance(pt1,pt2);
 	unitvec.val[0]  /= distance;
 	unitvec.val[1]  /= distance;
 	return unitvec;

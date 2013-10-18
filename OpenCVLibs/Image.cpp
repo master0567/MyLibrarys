@@ -151,34 +151,34 @@ bool Image::empty(){
 	return img.empty();
 }
 
-void Image::circle(cv::Point center,int radius,cv::Scalar scal){
+void Image::circle(cv::Point2f center,int radius,cv::Scalar scal){
 	cv::circle(img,center,radius,scal, -1, CV_AA);
 }
 
-void Image::rectangle(cv::Point pt1,cv::Point pt2,cv::Scalar scal,int thickness){
+void Image::rectangle(cv::Point2f pt1,cv::Point2f pt2,cv::Scalar scal,int thickness){
 	cv::rectangle(img,pt1,pt2,scal,thickness,8);
 }
-void Image::rectangle(cv::Point center,int w,int h,cv::Scalar scal,int thickness){
-	cv::rectangle(img,cv::Point(center.x-w/2,center.y-h/2),cv::Point(center.x+w/2,center.y+h/2),scal,thickness,8);
+void Image::rectangle(cv::Point2f center,int w,int h,cv::Scalar scal,int thickness){
+	cv::rectangle(img,cv::Point2f(center.x-w/2,center.y-h/2),cv::Point2f(center.x+w/2,center.y+h/2),scal,thickness,8);
 }
 
-void Image::rectangle(cv::Point center,int w,int h,int angle,cv::Scalar scal,int thickness){
+void Image::rectangle(cv::Point2f center,int w,int h,int angle,cv::Scalar scal,int thickness){
 	cv::Point pt1[1][4];
 	int npt[] = {4};
 	//double c=cos(angle*CV_PI/180),s=sin(angle*CV_PI/180);
 	const cv::Point *ppt[1] = {pt1[0]};
-	pt1[0][0] = cv::Point(center+Calc::PointRotate(w/2,h/2,angle));
-	pt1[0][1] = cv::Point(center+Calc::PointRotate(w/2,-h/2,angle));
-	pt1[0][2] = cv::Point(center+Calc::PointRotate(-w/2,-h/2,angle));
-	pt1[0][3] = cv::Point(center+Calc::PointRotate(-w/2,h/2,angle));
+	pt1[0][0] = cv::Point2f(center+Calc::PointRotate(w/2,h/2,angle));
+	pt1[0][1] = cv::Point2f(center+Calc::PointRotate(w/2,-h/2,angle));
+	pt1[0][2] = cv::Point2f(center+Calc::PointRotate(-w/2,-h/2,angle));
+	pt1[0][3] = cv::Point2f(center+Calc::PointRotate(-w/2,h/2,angle));
 	cv::polylines(img,ppt,npt,1,true,scal,thickness);
 }
 
-void Image::line(cv::Point pt1,cv::Point pt2,cv::Scalar scal,int thickness){
+void Image::line(cv::Point2f pt1,cv::Point2f pt2,cv::Scalar scal,int thickness){
 	cv::line(img,pt1,pt2,scal,thickness,8);
 }
 
-void Image::triangle(cv::Point pt1,cv::Point pt2,cv::Point pt3,cv::Scalar scal,int thickness){
+void Image::triangle(cv::Point2f pt1,cv::Point2f pt2,cv::Point2f pt3,cv::Scalar scal,int thickness){
 	cv::line(img,pt1,pt2,scal,thickness,8);
 	cv::line(img,pt2,pt3,scal,thickness,8);
 	cv::line(img,pt3,pt1,scal,thickness,8);

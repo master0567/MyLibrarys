@@ -59,12 +59,12 @@ public:
 
 	bool empty();
 
-	void circle(cv::Point center,int radius,cv::Scalar scal = cv::Scalar(0,0,0));
-	void rectangle(cv::Point pt1,cv::Point pt2,cv::Scalar scal = cv::Scalar(0,0,0),int thickness=1);
-	void rectangle(cv::Point center,int w,int h,cv::Scalar scal = cv::Scalar(0,0,0),int thickness=1);
-	void rectangle(cv::Point center,int w,int h,int angle,cv::Scalar scal = cv::Scalar(0,0,0),int thickness=1);
-	void line(cv::Point pt1,cv::Point pt2,cv::Scalar scal = cv::Scalar(0,0,0),int thickness=1);
-	void triangle(cv::Point pt1,cv::Point pt2,cv::Point pt3,cv::Scalar scal = cv::Scalar(0,0,0),int thickness=1);
+	void circle(cv::Point2f center,int radius,cv::Scalar scal = cv::Scalar(0,0,0));
+	void rectangle(cv::Point2f pt1,cv::Point2f pt2,cv::Scalar scal = cv::Scalar(0,0,0),int thickness=1);
+	void rectangle(cv::Point2f center,int w,int h,cv::Scalar scal = cv::Scalar(0,0,0),int thickness=1);
+	void rectangle(cv::Point2f center,int w,int h,int angle,cv::Scalar scal = cv::Scalar(0,0,0),int thickness=1);
+	void line(cv::Point2f pt1,cv::Point2f pt2,cv::Scalar scal = cv::Scalar(0,0,0),int thickness=1);
+	void triangle(cv::Point2f pt1,cv::Point2f pt2,cv::Point2f pt3,cv::Scalar scal = cv::Scalar(0,0,0),int thickness=1);
 
 	void imshow(string windowName);
 

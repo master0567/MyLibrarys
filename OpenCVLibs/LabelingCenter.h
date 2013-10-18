@@ -13,7 +13,7 @@ class PRO_EXPORTS LabelingCenter : public MouseEvent
 private:
 
 	Labeling labels;
-	vector<cv::Point> centers;
+	vector<cv::Point2f> centers;
 
 	// mouseRangeFilter—p‚Ì•Ï”
 	cv::Point2f mousePt[2];

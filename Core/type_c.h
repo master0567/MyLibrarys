@@ -40,6 +40,8 @@ template class PRO_EXPORTS std::basic_string<char, std::char_traits<char>, std::
 template class PRO_EXPORTS std::vector<clock_t>;
 template class PRO_EXPORTS std::vector<std::string>; 
 template class PRO_EXPORTS std::vector<int>; 
+template class PRO_EXPORTS std::vector<short>; 
 template class PRO_EXPORTS std::vector<cv::Point>;
-
+template class PRO_EXPORTS cv::Point_<float>;
+template class PRO_EXPORTS std::vector<cv::Point_<float>>;
 
