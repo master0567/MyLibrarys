@@ -7,6 +7,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 // ディレクトリにあってはいけない文字を探索する正規表現
 #define DIR_REGEX_STR "[:*?\"<>|]"
@@ -64,23 +65,24 @@ public:
 	bool isDirectory() const;
 	bool isDirectory(const string& name) const;
 	
-	const std::string getFilename() const;
+	//const std::string getFilename() const;
 	const std::string getDrive() const;
-	const vector<string> getIntoPaths() const;
+	const vector<string> getDirectoryFilePaths() const;
+	const vector<string> getDirectoryFileNames() const;
 	
 	static const string getExtention(const string path);
 	static const string getFileName(const string path);
+	static const string getRemoveFilename(const string path);
 
 	void cd(const boost::filesystem::path& path);
 	void cd(const boost::filesystem::path& path,const DirException& e);
-
-	/**
-	void move();	// ファイル移動
-	void copy();	// ファイルコピー
-	void getSize(); // ファイルサイズ取得
-	void getLastWriteTime();	// 最終更新取得
-	const vector<string> getIntoDirInPaths() const; // 再起的にディレクトリ取得
-	**/
+	
+	void move(std::string src,std::string dst);	// ファイル移動
+	void copy(std::string src,std::string dst);	// ファイルコピー
+	boost::uintmax_t getSize(std::string src); // ファイルサイズ取得
+	boost::posix_time::ptime getLastWriteTime(std::string src);	// 最終更新取得
+	//const vector<string> getIntoDirInPaths() const; // 再起的にディレクトリ取得
+	
 
 	bool create(int flag = NONE);
 	bool create(const boost::filesystem::path& path,int flag = NONE);

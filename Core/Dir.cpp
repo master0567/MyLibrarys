@@ -68,27 +68,32 @@ bool Dir::isDirectory(const string& name) const{
 	return fs::is_directory(pwd(name));
 }
 
-const std::string Dir::getFilename() const{
-	return path.filename().string();
-}
+//const std::string Dir::getFilename() const{
+//	return path.filename().string();
+//}
 
 const std::string Dir::getDrive() const{
 	return path.root_name().string();
 }
 
-const vector<string> Dir::getIntoPaths() const{
-	vector<string> names;
+const vector<string> Dir::getDirectoryFilePaths() const{
+	vector<string> paths;
 	// カレントディレクトリのファイル一覧してみよう
 	fs::directory_iterator end;
 	for( fs::directory_iterator it(path); it!=end; ++it )
 	{
-		names.push_back(it->path().string());
-		//if( fs::is_directory(*it) )
-		//	cout << "D ";
-		//else
-		//	cout << "F ";
-		//// leaf() パス情報を切って、ファイルの名前部分のみ取り出し
-		//cout << it->leaf() << endl;
+		paths.push_back(it->path().string());
+	}
+	return paths;
+}
+
+const vector<string> Dir::getDirectoryFileNames() const{
+	vector<string> names;
+	vector<string> paths;
+	paths = getDirectoryFilePaths();
+	vector<string>::iterator it = paths.begin();
+	for(it=paths.begin();it!=paths.end();it++){
+		names.push_back(Dir::getFileName(*it));
 	}
 	return names;
 }
@@ -103,6 +108,47 @@ const string Dir::getFileName(const string path){
 	return p.filename().string();
 }
 
+const string Dir::getRemoveFilename(const string path){
+	fs::path p(path);
+	return p.remove_filename().string();
+}
+
+void Dir::move(std::string src,std::string dst){
+	string path = Dir::getRemoveFilename(dst);
+	string name = Dir::getFileName(dst);
+	Dir dir(this->path,false);
+	dir.cd(path);
+	fs::rename(pwd(src),dir.pwd(name));
+}
+
+void Dir::copy(std::string src,std::string dst){
+	string path,name;
+	Dir dir(this->path,false);
+	name=Dir::getFileName(src);
+	try{
+		dir.cd(dst);
+	}catch(const DirException& e){
+		if(e.getErrorCode()==DirException::NOT_DIRECTORY ||
+		   e.getErrorCode()==DirException::NOT_EXIST){
+			path = Dir::getRemoveFilename(dst);
+			name = Dir::getFileName(dst);
+			dir.cd(path);
+		}
+	}
+
+	fs::copy(pwd(src),dir.pwd(name));
+}
+
+boost::uintmax_t Dir::getSize(std::string src){
+	const boost::uintmax_t size = fs::file_size(pwd(src));
+	return size;
+}
+
+boost::posix_time::ptime Dir::getLastWriteTime(std::string src){
+	const std::time_t last_update = fs::last_write_time(src);
+    boost::posix_time::ptime time = boost::posix_time::from_time_t(last_update);
+	return time;
+}
 
 bool Dir::create(int flag){
 	try{
