@@ -68,26 +68,36 @@ bool Dir::isDirectory(const string& name) const{
 	return fs::is_directory(pwd(name));
 }
 
-//const std::string Dir::getFilename() const{
-//	return path.filename().string();
-//}
+const std::string Dir::getFileName() const{
+	return path.filename().string();
+}
+
+const std::string Dir::getRemoveFileName() const{
+	fs::path p(pwd());
+	return p.remove_filename().string();
+}
 
 const std::string Dir::getDrive() const{
 	return path.root_name().string();
 }
 
-const vector<string> Dir::getDirectoryFilePaths() const{
-	vector<string> paths;
+const vector<string> Dir::getDirectoryFilePaths(bool allDir,vector<string> &paths){
+	//vector<string> paths;
 	// カレントディレクトリのファイル一覧してみよう
 	fs::directory_iterator end;
 	for( fs::directory_iterator it(path); it!=end; ++it )
 	{
 		paths.push_back(it->path().string());
+		if(allDir && isDirectory(Dir::getFileName(it->path().string()))){
+			cd(Dir::getFileName(it->path().string()));
+			getDirectoryFilePaths(allDir,paths);
+			cd("..");
+		}
 	}
 	return paths;
 }
 
-const vector<string> Dir::getDirectoryFileNames() const{
+const vector<string> Dir::getDirectoryFileNames(){
 	vector<string> names;
 	vector<string> paths;
 	paths = getDirectoryFilePaths();
@@ -140,7 +150,18 @@ void Dir::copy(std::string src,std::string dst){
 }
 
 boost::uintmax_t Dir::getSize(std::string src){
-	const boost::uintmax_t size = fs::file_size(pwd(src));
+	boost::uintmax_t size=0;
+	if(isDirectory(src)){
+		vector<string> names;
+		cd(src);
+		names=getDirectoryFileNames();
+		for(vector<string>::iterator it=names.begin();it!=names.end();it++){
+			size+=getSize(*it);
+		}
+		cd("..");
+	}else{
+		size = fs::file_size(pwd(src));
+	}
 	return size;
 }
 

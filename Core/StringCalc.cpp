@@ -12,7 +12,7 @@ StringCalc::~StringCalc(void)
 }
 
 void StringCalc::randomInit(){
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 }
 
 void StringCalc::randomStringOutput(int length,string filename){
